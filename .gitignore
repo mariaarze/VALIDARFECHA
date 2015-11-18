@@ -1,28 +1,56 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "stdlib.h"
+#include <string>
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+using namespace std;
 
-# Fortran module files
-*.mod
+bool validarfecha(string fecha);
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+int main ()
+{
+   string fecha;
+   // Ingresar fecha en formato dd/mm/aaaa 
+   cout<<"introduce la fecha: ";
+   cin>>fecha;
+   if (validarfecha(fecha))
+	   cout<<fecha<<"es fecha valida";
+   else
+	   cout<<fecha<<"es fecha invalida";
+   getch();
+}
+bool validarfecha(string fecha)
+{
+   int l,d,m,y,i;
+   bool valfecha=false,bisiesto=false;
+   string dia,mes, anio;
+   l=fecha.length();
+   cout<<l;
+   dia=fecha.substr(0,2);
+   mes=fecha.substr(3,2);
+   anio=fecha.substr(6);
+   d= atoi(dia.c_str());
+   m= atoi(mes.c_str());
+   y= atoi(anio.c_str());
+   if ((y % 4 == 0)&& (y%100!=0))
+	   bisiesto=true;
+   else
+	   if ((y%100==0)&&(y%400==0))
+		   bisiesto=true;
+   if( (d>0)&&(d<32)&&(m>0)&&(m<13)&&(y>0))
+     if(m==1||m==3||m==5||m==7||m==8||m==10||m==12)
+	   valfecha=true;
+     else
+		if(m==2&& d<30 && bisiesto)
+			valfecha=true;
+		else 
+			if(m==2&& d<29 && !bisiesto)
+				valfecha=true;
+			else 
+				if(m !=2 && d<31)
+					valfecha=true;
+	return valfecha;
+}
 
-# Executables
-*.exe
-*.out
-*.app
